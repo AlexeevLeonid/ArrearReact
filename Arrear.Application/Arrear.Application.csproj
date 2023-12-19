@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="11.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Arrear.Domain\Arrear.Domain.csproj" />
+    <ProjectReference Include="..\Arrear.Persistence\Arrear.Persistence.csproj" />
+    <ProjectReference Include="..\Arrear.Services\Arrear.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ChangeSepStatus\Commands\" />
+    <Folder Include="ChangeSepStatus\Handlers\" />
+  </ItemGroup>
+
+</Project>
