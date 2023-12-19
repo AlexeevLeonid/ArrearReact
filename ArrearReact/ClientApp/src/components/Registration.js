@@ -76,7 +76,7 @@ export class Registration extends Component {
                         </div>
                     </ul>
                     <ul className="list-group">
-                        <button type="button" className="btn btn-primary" onClick={this.postForm}>
+                            <button type="button pt-3" className="btn btn-primary" onClick={this.postForm}>
                             Register
                         </button>
                     </ul>

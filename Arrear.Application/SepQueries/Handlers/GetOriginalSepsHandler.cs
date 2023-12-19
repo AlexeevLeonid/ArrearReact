@@ -20,7 +20,7 @@ namespace Arrear.Application.SepQueries.Handlers
                 new Sep(null, Domain.Enums.Sex.Male, 5, ""),
                 new Sep(null, Domain.Enums.Sex.Male, 10, ""),
                 new Sep(null, Domain.Enums.Sex.Female, 15, ""),
-                new Sep(null, Domain.Enums.Sex.Female, 125, "")
+                new Sep(null, Domain.Enums.Sex.Female, 25, "")
             };
         }
     }

@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { DefaultSeps, FetchData } from './components/FetchData';
+import { SepsOrder, FetchData } from './components/SepsOrder';
 import { Home } from './components/Home';
 import { Layout } from './components/Layout';
 import { Login } from './components/Login';
 import { Registration } from './components/Registration';
-import { TakeInWork } from './components/TakeInWork';
+import { GetToWork } from './components/GetToWork';
 import { WorkDone } from './components/WorkDone';
 import './custom.css';
+import { Basket } from './components/Basket';
 /*import AppRoutes from './AppRoutes';*/
 
 export default class App extends Component {
@@ -15,10 +16,15 @@ export default class App extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { user: undefined };
+        this.state = { user: undefined, basket: [] };
         this.setUser = this.setUser.bind(this);
+        this.setBasket = this.setBasket.bind(this);
         this.updateUser = this.updateUser.bind(this);
         this.appRoutes = this.appRoutes.bind(this);
+    }
+
+    setBasket(value) {
+        this.setState({ basket: value });
     }
 
     setUser(value) {
@@ -34,22 +40,26 @@ export default class App extends Component {
                 'Authorization': `Bearer ${token}`
             },
         });
-        const value = await response.json();
-        if (value.userType == 0) value.userType = "Customer"
-        else if (value.userType == 1) value.userType = "ManagerFirstWorkshop"
-        else if (value.userType == 2) value.userType = "ManagerSecondWorkshop"
-        this.setUser(value)
+        const data = await response.json();
+        if (data.userType == 0) data.userType = "Customer"
+        else if (data.userType == 1) data.userType = "ManagerFirstWorkshop"
+        else if (data.userType == 2) data.userType = "ManagerSecondWorkshop"
+        data.seps = data.seps.map(sep =>
+            sep.sex == 0 ?
+                { ...sep, sex: "Male" }
+                : { ...sep, sex: "Female" })
+        this.setUser(data)
     }
 
     appRoutes() {
         return [
             {
                 index: true,
-                element: <Home />
+                element: <SepsOrder user={this.state.user} basket={this.state.basket} setBasket={this.setBasket} />
             },
             {
-                path: '/fetch-data',
-                element: <DefaultSeps user={this.state.user} />
+                path: '/basket',
+                element: <Basket user={this.state.user} basket={this.state.basket} setBasket={this.setBasket} />
             },
             {
                 path: '/registration',
@@ -61,7 +71,7 @@ export default class App extends Component {
             },
             {
                 path: '/take',
-                element: <TakeInWork user={this.state.user} />
+                element: <GetToWork user={this.state.user} />
             },
             {
                 path: '/done',
@@ -74,7 +84,7 @@ export default class App extends Component {
 
   render() {
     return (
-        <Layout user={this.state.user} setUser={this.setUser } >
+        <Layout user={this.state.user} setUser={this.setUser} basket={this.state.basket }>
         <Routes>
           {this.appRoutes().map((route, index) => {
             const { element, ...rest } = route;

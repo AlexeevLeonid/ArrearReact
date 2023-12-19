@@ -17,31 +17,37 @@ export class WorkDone extends Component {
 
     renderDefaultSepsTable(user) {
         return (
-            <table className='table table-striped' aria-labelledby="tabelLabel">
-                <thead>
-                    <tr>
-                        <th>Sex</th>
-                        <th>Size</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {user.seps.map(sep =>
-                        <tr key={sep.id}>
-                            <td>{sep.sex}</td>
-                            <td>{sep.size}</td>
-                            <td>
-                                <button className=
-                                    {this.props.user && this.props.user.userType != "Customer" ?
-                                        "btn btn-primary" : "btn btn-primary disabled"}
-                                    onClick={this.props.user ? () => (this.postOrder(sep.id, this.props.user.token)) : () => { }}>
-                                    Take
-                                </button>
-                            </td>
+            <div className='container row'>
+                <table className='table table-hover col-6' aria-labelledby="tabelLabel">
+                    <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Sex</th>
+                            <th scope="col">Size</th>
+                            <th scope="col">Adress</th>
+                            <th scope="col"></th>
                         </tr>
-                    )}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {user.seps.map(sep =>
+                            <tr key={sep.id}>
+                                <td>{sep.id}</td>
+                                <td>{sep.sex}</td>
+                                <td>{sep.size}</td>
+                                <td>{sep.deliveryAdress}</td>
+                                <td>
+                                    <button className=
+                                        {this.props.user && this.props.user.userType != "Customer" ?
+                                            "btn btn-primary" : "btn btn-primary disabled"}
+                                        onClick={this.props.user ? () => (this.doneWork(sep.id, this.props.user.token)) : () => { }}>
+                                        Take
+                                    </button>
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
         );
     }
 
@@ -52,8 +58,8 @@ export class WorkDone extends Component {
 
         return (
             <div>
-                <h1 id="tabelLabel" >Weather forecast</h1>
-                <p>This component demonstrates fetching data from the server.</p>
+                <h1 id="tabelLabel" >Completing of the work</h1>
+                <p>Click "Done" after completing the work and further sending.</p>
                 {contents}
             </div>
         );
@@ -67,7 +73,7 @@ export class WorkDone extends Component {
         }
     }
 
-    async postOrder(id, token) {
+    async doneWork(id, token) {
         var details = id
         const response = await fetch('sep/done', {
             method: 'POST',

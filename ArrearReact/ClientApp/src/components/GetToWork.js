@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-export class TakeInWork extends Component {
-    static displayName = TakeInWork.name;
+export class GetToWork extends Component {
+    static displayName = GetToWork.name;
 
     constructor(props) {
         super(props);
@@ -17,24 +17,28 @@ export class TakeInWork extends Component {
 
     renderDefaultSepsTable(seps) {
         return (
-            <table className='table table-striped' aria-labelledby="tabelLabel">
+            <table className='table table-hover' aria-labelledby="tabelLabel">
                 <thead>
                     <tr>
-                        <th>Sex</th>
-                        <th>Size</th>
-                        <th></th>
+                        <th scope="col">Id</th>
+                        <th scope="col">Sex</th>
+                        <th scope="col">Size</th>
+                        <th scope="col">Adress</th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
                     {seps.map(sep =>
                         <tr key={sep.id}>
+                            <td>{sep.id}</td>
                             <td>{sep.sex}</td>
                             <td>{sep.size}</td>
+                            <td>{sep.deliveryAdress}</td>
                             <td>
                                 <button className=
                                     {this.props.user && this.props.user.userType != "Customer" ?
                                         "btn btn-primary" : "btn btn-primary disabled"}
-                                    onClick={this.props.user ? () => (this.postOrder(sep.id, this.props.user.token)) : () => { }}>
+                                    onClick={this.props.user ? () => (this.takeInWork(sep.id, this.props.user.token)) : () => { }}>
                                     Take
                                 </button>
                             </td>
@@ -52,8 +56,8 @@ export class TakeInWork extends Component {
 
         return (
             <div>
-                <h1 id="tabelLabel" >Weather forecast</h1>
-                <p>This component demonstrates fetching data from the server.</p>
+                <h1 id="tabelLabel" >Sepulkas that need to be taken to work</h1>
+                <p>Hire the incoming sepulkas from the list</p>
                 {contents}
             </div>
         );
@@ -67,11 +71,14 @@ export class TakeInWork extends Component {
                 'Authorization': `Bearer ${token}`
             },
         });
-        const data = await response.json();
+        const data = (await response.json()).map(sep =>
+            sep.sex == 0 ?
+                { ...sep, sex: "Male" }
+                : { ...sep, sex: "Female" })
         this.setState({ sepuls: data, loading: false });
     }
 
-    async postOrder(id, token) {
+    async takeInWork(id, token) {
         var details = id
         const response = await fetch('sep/take', {
             method: 'POST',

@@ -32,10 +32,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="ClientApp\src\components\Take.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Arrear.Application\Arrear.Application.csproj" />
     <ProjectReference Include="..\Arrear.Domain\Arrear.Domain.csproj" />
     <ProjectReference Include="..\Arrear.Persistence\Arrear.Persistence.csproj" />

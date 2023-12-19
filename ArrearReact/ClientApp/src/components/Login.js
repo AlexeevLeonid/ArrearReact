@@ -36,6 +36,11 @@ export class Login extends Component {
         if (data.userType == 0) data.userType = "Customer"
         else if (data.userType == 1) data.userType = "ManagerFirstWorkshop"
         else if (data.userType == 2) data.userType = "ManagerSecondWorkshop"
+
+        data.seps = data.seps.map(sep =>
+            sep.sex == 0 ?
+                { ...sep, sex: "Male" }
+                : { ...sep, sex: "Female" })
         this.props.setUser(data)
     }
 

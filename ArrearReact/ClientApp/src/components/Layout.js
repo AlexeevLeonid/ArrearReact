@@ -13,7 +13,7 @@ export class Layout extends Component {
   render() {
     return (
       <div>
-            <NavMenu user={this.props.user} setUser={this.props.setUser} />
+            <NavMenu user={this.props.user} setUser={this.props.setUser} basket={this.props.basket} />
         <Container>
           {this.props.children}
         </Container>

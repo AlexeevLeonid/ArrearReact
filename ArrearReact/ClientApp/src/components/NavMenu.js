@@ -30,7 +30,7 @@ export class NavMenu extends Component {
                 <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
                     <ul className="navbar-nav flex-grow">
                         <NavItem>
-                            <NavLink tag={Link} className="text-dark" to="/">Home</NavLink>
+                            <NavLink tag={Link} className="text-dark" to="/">Shop</NavLink>
                         </NavItem>
                         
                         {!this.props.user ? <>
@@ -43,15 +43,16 @@ export class NavMenu extends Component {
                         </> : <>
                                 {this.props.user.userType != "Customer" ? <>
                                 <NavItem>
-                                    <NavLink tag={Link} className="text-dark" to="/take">Take in work</NavLink>
+                                    <NavLink tag={Link} className="text-dark" to="/take">Get to work</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink tag={Link} className="text-dark" to="/done">Done work</NavLink>
+                                        <NavLink tag={Link} className="text-dark" to="/done">Done work: {this.props.user.seps.length}</NavLink>
                                     </NavItem>
-                                </> :
+                                </> : <>
                                     <NavItem>
-                                        <NavLink tag={Link} className="text-dark" to="/fetch-data">Order default seps</NavLink>
-                                    </NavItem>
+                                            <NavLink tag={Link} className="text-dark" to="/basket">Cart : {this.props.basket.length}</NavLink>
+                                        </NavItem>
+                                    </>
                                 }
                                 <li className="nav-item">
                                     <a className="nav-link disabled" href="#">{this.props.user.name} </a>
